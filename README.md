@@ -113,3 +113,45 @@ polls/
 ```
 Esta estrutura de diretório irá abrigar a aplicação de enquete.
 
+<hr>
+
+## Escrevendo a primeira View
+
+Para criar uma View, é necessário adicionar o seguinte código dentro de ```polls/views.py```:
+
+´´´
+from django.http import HttpResponse
+
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
+´´´
+
+Esta é a view mais simples possível no Django. Para chamar a view, é necessário mapear a URL - e para isto se torna preciso de uma URLconf.
+
+Para criar uma URLconf no diretório polls, crie um arquivo chamado ```urls.py```. O diretório do seu app deverá ficar da seguinte forma:
+
+```
+polls/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+        __init__.py
+    models.py
+    tests.py
+    urls.py
+    views.py
+```
+No arquivo ```polls/urls.py``` inclua o seguinte código:
+
+```
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path("", views.index, name="index"),
+]
+```
+
