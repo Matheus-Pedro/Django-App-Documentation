@@ -1,1 +1,4 @@
 .venv/
+
+mysite/mysite/__pycache__/
+mysite/mysite/db.sqlite3
