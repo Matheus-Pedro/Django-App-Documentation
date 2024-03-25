@@ -65,3 +65,16 @@ Refêrenciando a documentação do [Django](https://docs.djangoproject.com/pt-br
 - ```mysite/asgi.py```: um ponto de integração para servidores web compatíveis com ASGI usado para servir seu projeto. Veja [Como fazer o deploy com ASGI](https://docs.djangoproject.com/pt-br/5.0/howto/deployment/asgi/) para mais detalhes.
 ```mysite/wsgi.py```: um ponto de integração para servidores web compatíveis com WSGI usado para servir seu projeto. Veja [Como implementar com WSGI](https://docs.djangoproject.com/pt-br/5.0/howto/deployment/wsgi/) para mais detalhes.
 
+## Servidor de Desenvolvimento
+Vamos verificar se ele funciona. Ative o ambiente virtual, caso não esteja ativo, vá para o diretório ```mysite```, se ainda não estiver nele, e execute o seguinte comando:
+```
+$ python manage.py runserver
+```
+<b>Lembrando sempre de não utilizar</b> esse servidor em ambiente de produção. Ele foi planejado apenas para desenvolvimento. Essa ferramente foi incluída no Django para que possa desenvolver coisas rapidamente, sem ter que lidar com a configuração de um servidor de produção – como o Apache – até que esteja pronto para a produção.
+
+Por padrão o comando ```runserver``` inicia o servidor dde desenvolvimento no IP interno da porta 8000. É possível mudar esse a porta passando ela na linha de comando como um argumento, logo após o comando.
+Por exemplo:
+```
+$ python manage.py runserver 8080
+```
+É possível alterar o IP, entretanto se torna um assunto mais avançado no qual acredito que não sejá necessário se aprofundar no momento.
