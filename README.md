@@ -11,6 +11,8 @@ $ python -m venv .venv
 ```
 O ```-m``` chama um módulo do python, no caso é ```venv```.
 
+<hr>
+
 ## Ativando o Ambiente Virtual
 
 Não basta somente criar o ambiente, é necessário ativá-lo:
@@ -23,6 +25,8 @@ $ nome_do_ambiente_virtual\Scripts\Activate
 ```
 Agora podemos instalar as dependências sem que haja futuros conflitos, basta digitar ```pip install``` e o nome da biblioteca que deseja instalar.
 
+<hr>
+
 ## Instalando o Django
 
 Para utilizar o Django é necessário que suas depêndencias sejam instaladas. Com o ```venv``` já ativado, realiza-se a instalação delas com o seguinte comando:
@@ -32,6 +36,8 @@ $ pip install Django
 ```
 
 O ```pip``` é o gerenciador de pacotes do python.
+
+<hr>
 
 ## Criando um projeto
 
@@ -65,6 +71,8 @@ Refêrenciando a documentação do [Django](https://docs.djangoproject.com/pt-br
 - ```mysite/asgi.py```: um ponto de integração para servidores web compatíveis com ASGI usado para servir seu projeto. Veja [Como fazer o deploy com ASGI](https://docs.djangoproject.com/pt-br/5.0/howto/deployment/asgi/) para mais detalhes.
 ```mysite/wsgi.py```: um ponto de integração para servidores web compatíveis com WSGI usado para servir seu projeto. Veja [Como implementar com WSGI](https://docs.djangoproject.com/pt-br/5.0/howto/deployment/wsgi/) para mais detalhes.
 
+<hr>
+
 ## Servidor de Desenvolvimento
 Vamos verificar se ele funciona. Ative o ambiente virtual, caso não esteja ativo, vá para o diretório ```mysite```, se ainda não estiver nele, e execute o seguinte comando:
 ```
@@ -78,3 +86,30 @@ Por exemplo:
 $ python manage.py runserver 8080
 ```
 É possível alterar o IP, entretanto se torna um assunto mais avançado no qual acredito que não sejá necessário se aprofundar no momento.
+
+<hr>
+
+## Criando uma aplicação (App)
+Uma app no Django é um pedaço do código, responsável por administrar um determinado contexto. Para definir uma app, é necessário se certificar de que esteja no mesmo diretório que ```manage.py```e logo após utilizar: 
+
+```
+$ python manage.py startapp nameofapp
+```
+No meu caso:
+```
+$ python manage.py startapp polls
+```
+Isto criará um diretório polls, com a seguinte estrutura:
+```
+polls/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+        __init__.py
+    models.py
+    tests.py
+    views.py
+```
+Esta estrutura de diretório irá abrigar a aplicação de enquete.
+
