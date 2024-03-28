@@ -2,13 +2,13 @@
 ## Criando um Ambiente Virtual
 
 Irei criar um ambiente virtual (Virtual Environment) para armazenar todas as dependências de instalações necessárias. Ao fazer isso, evita-se que instalações de outros projetos conflitem com esse.
-```
-$ python -m venv nameofvirtualenvironment
-```
+
+    $ python -m venv nameofvirtualenvironment
+
 No meu caso:
-```
-$ python -m venv .venv
-```
+
+    $ python -m venv .venv
+
 O ```-m``` chama um módulo do python, no caso é ```venv```.
 
 <hr>
@@ -16,13 +16,13 @@ O ```-m``` chama um módulo do python, no caso é ```venv```.
 ## Ativando o Ambiente Virtual
 
 Não basta somente criar o ambiente, é necessário ativá-lo:
-```
-$ source nome_do_ambiente_virtual/bin/activate
-```
+    
+    $ source nome_do_ambiente_virtual/bin/activate
+
 Caso o windows seja utilizado, para ativar o ambiente o comando se difere:
-```
-$ nome_do_ambiente_virtual\Scripts\Activate
-```
+
+    $ nome_do_ambiente_virtual\Scripts\Activate
+
 Agora podemos instalar as dependências sem que haja futuros conflitos, basta digitar ```pip install``` e o nome da biblioteca que deseja instalar.
 
 <hr>
@@ -31,9 +31,7 @@ Agora podemos instalar as dependências sem que haja futuros conflitos, basta di
 
 Para utilizar o Django é necessário que suas depêndencias sejam instaladas. Com o ```venv``` já ativado, realiza-se a instalação delas com o seguinte comando:
 
-```
-$ pip install Django
-```
+    $ pip install Django
 
 O ```pip``` é o gerenciador de pacotes do python.
 
@@ -43,13 +41,12 @@ O ```pip``` é o gerenciador de pacotes do python.
 
 Use o seguinte código para criar uma estrutura de arquivos padrão para um projeto:
 
-```
-$ django-admin startproject nameofproject
-```
+    $ django-admin startproject nameofproject
+
 No meu caso:
-```
-$ django-admin startproject mysite
-```
+
+    $ django-admin startproject mysite
+
 Essa será a estrutura criada: 
 ```
 mysite/
@@ -75,16 +72,16 @@ Refêrenciando a documentação do [Django](https://docs.djangoproject.com/pt-br
 
 ## Servidor de Desenvolvimento
 Vamos verificar se ele funciona. Ative o ambiente virtual, caso não esteja ativo, vá para o diretório ```mysite```, se ainda não estiver nele, e execute o seguinte comando:
-```
-$ python manage.py runserver
-```
+
+    $ python manage.py runserver
+
 <b>Lembrando sempre de não utilizar</b> esse servidor em ambiente de produção. Ele foi planejado apenas para desenvolvimento. Essa ferramente foi incluída no Django para que possa desenvolver coisas rapidamente, sem ter que lidar com a configuração de um servidor de produção – como o Apache – até que esteja pronto para a produção.
 
 Por padrão o comando ```runserver``` inicia o servidor dde desenvolvimento no IP interno da porta 8000. É possível mudar esse a porta passando ela na linha de comando como um argumento, logo após o comando.
 Por exemplo:
-```
-$ python manage.py runserver 8080
-```
+
+    $ python manage.py runserver 8080
+
 É possível alterar o IP, entretanto se torna um assunto mais avançado no qual acredito que não sejá necessário se aprofundar no momento.
 
 <hr>
@@ -92,13 +89,12 @@ $ python manage.py runserver 8080
 ## Criando uma aplicação (App)
 Uma app no Django é um pedaço do código, responsável por administrar um determinado contexto. Para definir uma app, é necessário se certificar de que esteja no mesmo diretório que ```manage.py```e logo após utilizar: 
 
-```
-$ python manage.py startapp nameofapp
-```
+    $ python manage.py startapp nameofapp
+
 No meu caso:
-```
-$ python manage.py startapp polls
-```
+
+    $ python manage.py startapp polls
+
 Isto criará um diretório polls, com a seguinte estrutura:
 ```
 polls/
@@ -119,13 +115,13 @@ Esta estrutura de diretório irá abrigar a aplicação de enquete.
 
 Para criar uma View, é necessário adicionar o seguinte código dentro de ```polls/views.py```:
 
-´´´
+```
 from django.http import HttpResponse
 
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
-´´´
+```
 
 Esta é a view mais simples possível no Django. Para chamar a view, é necessário mapear a URL - e para isto se torna preciso de uma URLconf.
 
@@ -154,4 +150,42 @@ urlpatterns = [
     path("", views.index, name="index"),
 ]
 ```
+<hr>
 
+## Configurando o Banco de Dados
+Entrando no arquivo ```mysite/settings.py``` é possível visualizar diversas variáveis de módulo, elas representam as configurações do Django. Por padrão o banco de dados utiliza a configuração do SQLite, realizaremos a alteração para o PostgreSQL. 
+
+Em ```DATABASES``` realizamos a seguinte alteração, alterando a ```ENGINE``` do Django e adicionando as demais varíaveis de ambiente necessárias para realizar a conexão com o banco de dados:
+
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'nameofdatabase',
+        'USER': 'nameofuser',
+        'PASSWORD': 'password',
+        'HOST': '127.0.0.1orotherip',
+        'PORT': "5432"
+    }
+}
+```
+<hr>
+
+## Configurando a TIME ZONE
+Enquanto estiver editando ```mysite/settings.py```, realize a alteração de ```TIME_ZONE``` para o seu fuso horário.
+
+## Entendendo Intalled Apps
+Também observe a configuração do ```INSTALLED_APPS``` na parte superior do arquivo. Ela possui os nomes de todas as aplicações Django ativas para essa instância do Django. Aplicações podem ser usadas em múltiplos projetos, e você pode empacotá-las e distribuí-las para uso por outros em seus projetos.
+
+- ```django.contrib.admin``` – O site de administração. Irá usar isso em breve.
+- ```django.contrib.auth``` – Um sistema de autenticação.
+- ```django.contrib.contenttypes``` – Um framework para tipos de conteúdo.
+- ```django.contrib.sessions``` – Um framework de sessão.
+- ```django.contrib.messages``` – Um framework de envio de mensagem.
+- ```django.contrib.staticfiles``` – Um framework para gerenciamento de arquivos estáticos.
+
+Algumas dessas aplicações fazem uso de pelo menos uma tabela no banco de dados, assim sendo, nós precisamos criar as tabelas no banco de dados antes que possamos utilizá-las. Para isso rode o seguinte comando:
+
+    $ python manage.py migrate
+
+## Criando as Models
